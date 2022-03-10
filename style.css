@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Explora&family=Lora:ital@1&family=Merriweather:ital@1&family=Montserrat&family=Roboto&display=swap');
 
 :root{/*root represent the html element*/
-    --my-black: rgb(46, 46, 46);
+    --description-color: rgb(46, 46, 46); 
     --font : Roboto;
 }
 
@@ -29,19 +29,26 @@ h1 {
 }
 
 #container{
-    width: 85%;
+    width: 80%;
     display: flex;
     flex-wrap: wrap;
+    position: relative;
+    left: 3%;
 }
 
 .card{
-    background-color: rgb(51, 54, 58);
+    background-color: var(--description-color);
     border-radius: 5px;
-    width: 150px;
+    width: 12%;
     height: 250px;
     display: relative;
     box-shadow:2px 2px 10px white;
     margin: 10px;
+    min-width: 125px;
+}
+
+.card:hover{
+    transform: scale(101%);
 }
 
 .pic{
@@ -50,6 +57,11 @@ h1 {
     background-color: aliceblue;
     object-fit: cover;
     border-radius: 5px 5px 0 0; 
+    filter: saturate(0);
+}
+
+.pic:hover{ 
+    filter: saturate(1);
 }
 
 .description {

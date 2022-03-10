@@ -25,7 +25,12 @@ body {
 
 h1 {
     margin-top: 100px;
+    margin-bottom: 20px;
+}
+
+input{
     margin-bottom: 100px;
+    filter: saturate(0);
 }
 
 #container{

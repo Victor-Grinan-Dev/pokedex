@@ -1,40 +1,47 @@
-
 const container = document.querySelector("#container");
+const displayBtn = document.querySelector("#display");
+const searchBtn = document.querySelector("#search");
 
+const getCards = (amount) => {
 
-const baseURL = "https://pokeapi.co/api/v2/"
-const endpoint = "pokemon/2"
-const endpoints = {
-    default:"pokemon/ditto",
-    index:"pokemon/1",
-    type:"type/3",
-    teachers: "pokemon?limit=50&offset=50",
-    level: "other.dreamworld."
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${amount}&offset=0`
+
+    fetch(url).then((res) => res.json()).then((data) => {
+        const fetches = data.results.map((pokemon) =>{
+            return fetch(pokemon.url).then((res) => res.json())
+        });
+        Promise.all(fetches).then((res) => {
+            
+            for(let i = 0; i < res.length; i++){
+                
+                let pokeName = res[i].name;
+                let img = res[i].sprites.other.dream_world.front_default;
+    
+                container.insertAdjacentHTML("beforeend", `<div class="card" ><div class="pic"><img src="${img}" alt="#" id="one"></div><div class="description">
+                <h3>${pokeName}</h3></div>
+                <p>${res[i].types.map((element) => element.types)}</p></div>
+                `)  
+                console.log(res[i].types[0].type.name)
+            }
+            
+        });
+    }).catch(error => console.log("error", error));
+
 }
 
-const amount = 100;
-const url = `https://pokeapi.co/api/v2/pokemon?limit=${amount}&offset=0`
+getCards(amount);
 
-fetch(url).then((res) => res.json()).then((data) => {
-    const fetches = data.results.map((pokemon) =>{
-        return fetch(pokemon.url).then((res) => res.json())
-    });
-    Promise.all(fetches).then((res) => {
-        console.log("promise all", res);
-        
-        for(let i = 0; i < res.length; i++){
-            
-            let pokeName = res[i].name;
-            let img = res[i].sprites.other.dream_world.front_default;
+const changeAmount = (e) => {
+    e.preventDefault();
 
-            container.insertAdjacentHTML("beforeend", `<div class="card" ><div class="pic"><img src="${img}" alt="#" id="one"></div><div class="description">
-            <h3>${pokeName}</h3></div></div>`)
+    container.innerHTML = ""
 
-        }
+    amount = document.querySelector("#amount").value;
+    getCards(amount);
+    console.log(amount)
+}
 
-    });
-}).catch(error => console.log("error", error));
-
+displayBtn.addEventListener("click", changeAmount);
 
 /**
  *fetch(url).then((response) => response.json())

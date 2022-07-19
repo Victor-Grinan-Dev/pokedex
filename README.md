@@ -1,0 +1,3 @@
+# pokedex
+
+- a HBC exercise
